@@ -13,31 +13,20 @@ go-app:
   build: ./go-app
   env_file: env/default
   command: "gin -a 8080 r main.go"
-  #links:
-  #  - db
-  #  - redis
   ports:
     - "3000:3000"
     - "8080:8080"
   volumes:
     - "./go-app:/go/src/github.com/mapzen/goexample"
 
-########ruby-app:
-########  build: ./ruby-app
-########  env_file: env/default
-########  links:
-########    - db
-########    - redis
-
-########python-app:
-########  build: ./python-app
-########  env_file: env/default
-########  links:
-########    - db
-########    - redis
-########  command: "honcho run ./run-debug.py"
-########  ports:
-########    - "5000:5000"
-########    - "8000:8000"
-########  volumes:
-########    - ".:/app"
+python-app:
+  build: ./python-app
+  env_file: env/default
+  links:
+    - db
+    - redis
+  command: "gunicorn -b 0.0.0.0:8000 --reload sample:api"
+  ports:
+    - "8000:8000"
+  volumes:
+    - "./python-app:/app"
