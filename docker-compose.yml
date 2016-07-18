@@ -30,3 +30,12 @@ python-app:
     - "8000:8000"
   volumes:
     - "./python-app:/app"
+
+nodejs-app:
+  build: ./nodejs-app
+  env_file: env/default
+  command: "npm start"
+  ports:
+    - "4000:4000"
+  volumes:
+    - "./nodejs-app:/app"
