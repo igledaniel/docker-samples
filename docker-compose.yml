@@ -1,17 +1,18 @@
 db:
-  image: postgres
   env_file: env/default
+  image: postgres
   ports:
     - "5432"
 
 redis:
+  env_file: env/default
   image: redis
   ports:
     - "6379"
 
 go-app:
-  build: ./go-app
   env_file: env/default
+  build: ./go-app
   command: "gin -a 8080 r main.go"
   ports:
     - "3000:3000"
@@ -20,8 +21,8 @@ go-app:
     - "./go-app:/go/src/github.com/mapzen/goexample"
 
 python-app:
-  build: ./python-app
   env_file: env/default
+  build: ./python-app
   links:
     - db
     - redis
@@ -32,10 +33,20 @@ python-app:
     - "./python-app:/app"
 
 nodejs-app:
-  build: ./nodejs-app
   env_file: env/default
+  build: ./nodejs-app
   command: "npm start"
   ports:
     - "4000:4000"
   volumes:
     - "./nodejs-app:/app"
+
+ember-app:
+  env_file: env/default
+  build: ./ember-app
+  env_file: env/default
+  command: "server"
+  ports:
+    - "4200:4200"
+  volumes:
+    - "./ember-app:/app"
