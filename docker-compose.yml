@@ -1,3 +1,14 @@
+db:
+  image: postgres
+  env_file: env/default
+  ports:
+    - "5432"
+
+redis:
+  image: redis
+  ports:
+    - "6379"
+
 go-app:
   build: ./go-app
   env_file: env/default
@@ -10,3 +21,23 @@ go-app:
     - "8080:8080"
   volumes:
     - "./go-app:/go/src/github.com/mapzen/goexample"
+
+########ruby-app:
+########  build: ./ruby-app
+########  env_file: env/default
+########  links:
+########    - db
+########    - redis
+
+########python-app:
+########  build: ./python-app
+########  env_file: env/default
+########  links:
+########    - db
+########    - redis
+########  command: "honcho run ./run-debug.py"
+########  ports:
+########    - "5000:5000"
+########    - "8000:8000"
+########  volumes:
+########    - ".:/app"
