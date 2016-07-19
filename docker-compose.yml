@@ -40,6 +40,7 @@ nodejs-app:
     - "4000:4000"
   volumes:
     - "./nodejs-app:/app"
+    - "/app/node_modules"
 
 ember-app:
   env_file: env/default
