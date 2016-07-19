@@ -63,3 +63,14 @@ rails-app:
   links:
     - db
     - redis
+
+spark-app:
+  env_file: env/default
+  build: ./spark-app
+  volumes:
+    - "./spark-app:/app"
+  ports:
+    - "4567:4567"
+  links:
+    - db
+    - redis
